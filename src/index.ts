@@ -1,45 +1,53 @@
-interface SuperSessionStorageProperties {
-  setItem(key: string, value: any): void
-  getItem(key: string): any
+interface SuperSessionStorageProperties<ItemType = any> {
+  setItem(key: string, value: ItemType): void
+  getItem(key: string): ItemType | undefined
   key(index: number): string | undefined
   has(key: string): boolean
-  includes(value: any): boolean
+  includes(value: ItemType): boolean
   removeItem(key: string): void
   clear(): void
   get length(): number
 }
 
-interface SuperSessionStorageConstructor {
+interface SuperSessionStorageConstructor<ItemType = any> {
   ttl: number
   checkperiod?: number
 }
 
-type MapEntry = { value: any; expiresIn: number | undefined }
+type MapEntry<ItemType = any> = {
+  value: ItemType
+  expiresIn: number | undefined
+}
 
-export class SuperSessionStorage implements SuperSessionStorageProperties {
-  private map = new Map<string, MapEntry>()
+export class SuperSessionStorage<ItemType = any>
+  implements SuperSessionStorageProperties
+{
+  private map: Map<string, MapEntry<ItemType>>
 
   private ttl?: number
   private cleanupInterval?: number
 
-  constructor(options?: SuperSessionStorageConstructor) {
+  constructor(options?: SuperSessionStorageConstructor<ItemType>) {
     if (options?.ttl) {
       this.ttl = options.ttl
+
       this.cleanupInterval = setInterval(
         () => this.cleanupExpiredEntries(),
         (options.checkperiod || 60) * 1000,
       )
     }
+
+    this.map = new Map<string, MapEntry<ItemType>>()
   }
 
-  private get getCurrentTime() {
+  private getCurrentTime() {
     return new Date().getTime() / 1000
   }
 
   private getUnexpiredItem(key: string) {
     const entry = this.map.get(key)
 
-    if (entry?.expiresIn && this.getCurrentTime > entry.expiresIn) {
+    if (entry?.expiresIn && this.getCurrentTime() > entry.expiresIn) {
       this.map.delete(key)
       return
     }
@@ -47,7 +55,7 @@ export class SuperSessionStorage implements SuperSessionStorageProperties {
   }
 
   private cleanupExpiredEntries() {
-    const currentTime = this.getCurrentTime
+    const currentTime = this.getCurrentTime()
 
     for (const [key, entry] of this.map) {
       if (entry.expiresIn && currentTime > entry.expiresIn) {
@@ -77,12 +85,12 @@ export class SuperSessionStorage implements SuperSessionStorageProperties {
     return true
   }
 
-  setItem(key: string, value: any): void {
-    const expiresIn = this.ttl && this.getCurrentTime + this.ttl
+  setItem(key: string, value: ItemType): void {
+    const expiresIn = this.ttl && this.getCurrentTime() + this.ttl
     this.map.set(key, { value, expiresIn })
   }
 
-  getItem(key: string) {
+  getItem(key: string): ItemType | undefined {
     return this.getUnexpiredItem(key)?.value
   }
 
@@ -97,7 +105,7 @@ export class SuperSessionStorage implements SuperSessionStorageProperties {
     return !!entry
   }
 
-  includes(value: any): boolean {
+  includes(value: ItemType): boolean {
     this.cleanupExpiredEntries()
     const entries = Array.from(this.map.values())
 
@@ -116,6 +124,7 @@ export class SuperSessionStorage implements SuperSessionStorageProperties {
   clear(): void {
     this.map.clear()
     clearInterval(this.cleanupInterval)
+    this.cleanupInterval = undefined
   }
 
   get length(): number {

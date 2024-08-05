@@ -34,7 +34,7 @@ npm install super-sessionstorage
 
 ## Example
 
-config.js:
+#### config.js:
 
 ```js
 import { SuperSessionStorage } from 'super-sessionstorage'
@@ -42,7 +42,7 @@ import { SuperSessionStorage } from 'super-sessionstorage'
 export const storage = new SuperSessionStorage({ ttl: 3600 })
 ```
 
-setItem:
+#### setItem:
 
 ```js
 import { storage } from './config.js'
@@ -55,7 +55,7 @@ const myObject = {
 storage.setItem('example', myObject)
 ```
 
-getItem:
+#### getItem:
 
 ```js
 import { storage } from './config.js'
@@ -66,9 +66,21 @@ console.log(example)
 console.log(typeof example)
 ```
 
-output:
+#### output:
 
 ```txt
 { test1: 123, test2: [1, 2, "123"] }
 object
+```
+
+#### Strict Type:
+
+```js
+import { SuperSessionStorage } from 'super-sessionstorage'
+
+type Item = { id: number;  productName: string }
+
+const storage = new SuperSessionStorage<Item>()
+
+storage.setItem('example1', { id: '100', productName: 'test' }) // Error: Id should be number
 ```
