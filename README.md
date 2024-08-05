@@ -12,30 +12,32 @@ npm install super-sessionstorage
 
 ## Methods
 
-- `setItem`
+- `setItem(key: string, value: T, customTTL?: number): void`
 
-- `getItem`
+- `getItem(key: string): T | undefined`
 
-- `key`
+- `key(index: number): string | undefined`
 
-- `includes`
+- `has(key: string): boolean`
 
-- `clear`
+- `includes(value: T): boolean`
 
-- `length`
+- `clear(): void`
 
-- `removeItem`
+- `get length(): number`
+
+- `removeItem(key: string): void`
 
 ## Options
 
-- `ttl` default is infinity (seconds)
+- `stdTTL` default is infinity (seconds)
 
 - `checkperiod` default is 60 (seconds)
 
 ## Strict Type
 
 ```js
-const storage = new SuperSessionStorage<CustomItemType>(/* options */)
+const storage = new SuperSessionStorage<CustomItemType>({ /* options */ })
 ```
 
 ## Example

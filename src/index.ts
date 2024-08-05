@@ -1,35 +1,35 @@
-interface SuperSessionStorageProperties<ItemType = any> {
-  setItem(key: string, value: ItemType): void
-  getItem(key: string): ItemType | undefined
+interface SuperSessionStorageProperties<T = any> {
+  setItem(key: string, value: T, customTTL?: number): void
+  getItem(key: string): T | undefined
   key(index: number): string | undefined
   has(key: string): boolean
-  includes(value: ItemType): boolean
+  includes(value: T): boolean
   removeItem(key: string): void
   clear(): void
   get length(): number
 }
 
-interface SuperSessionStorageConstructor<ItemType = any> {
-  ttl: number
+interface SuperSessionStorageConstructor<T = any> {
+  stdTTL: number
   checkperiod?: number
 }
 
-type MapEntry<ItemType = any> = {
-  value: ItemType
+type MapEntry<T = any> = {
+  value: T
   expiresIn: number | undefined
 }
 
-export class SuperSessionStorage<ItemType = any>
+export class SuperSessionStorage<T = any>
   implements SuperSessionStorageProperties
 {
-  private map: Map<string, MapEntry<ItemType>>
+  private map: Map<string, MapEntry<T>>
 
-  private ttl?: number
+  private stdTTL?: number
   private cleanupInterval?: number
 
-  constructor(options?: SuperSessionStorageConstructor<ItemType>) {
-    if (options?.ttl) {
-      this.ttl = options.ttl
+  constructor(options?: SuperSessionStorageConstructor<T>) {
+    if (options?.stdTTL) {
+      this.stdTTL = options.stdTTL
 
       this.cleanupInterval = setInterval(
         () => this.cleanupExpiredEntries(),
@@ -37,7 +37,7 @@ export class SuperSessionStorage<ItemType = any>
       )
     }
 
-    this.map = new Map<string, MapEntry<ItemType>>()
+    this.map = new Map<string, MapEntry<T>>()
   }
 
   private getCurrentTime() {
@@ -85,12 +85,18 @@ export class SuperSessionStorage<ItemType = any>
     return true
   }
 
-  setItem(key: string, value: ItemType): void {
-    const expiresIn = this.ttl && this.getCurrentTime() + this.ttl
+  setItem(key: string, value: T, customTTL?: number): void {
+    if (customTTL && !this.stdTTL) {
+      throw new Error(
+        'ERROR: To use customTTL you need to activate the default stdTTL on the instance',
+      )
+    }
+    const definitiveTTL = customTTL || this.stdTTL
+    const expiresIn = definitiveTTL && this.getCurrentTime() + definitiveTTL
     this.map.set(key, { value, expiresIn })
   }
 
-  getItem(key: string): ItemType | undefined {
+  getItem(key: string): T | undefined {
     return this.getUnexpiredItem(key)?.value
   }
 
@@ -105,7 +111,7 @@ export class SuperSessionStorage<ItemType = any>
     return !!entry
   }
 
-  includes(value: ItemType): boolean {
+  includes(value: T): boolean {
     this.cleanupExpiredEntries()
     const entries = Array.from(this.map.values())
 
