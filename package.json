@@ -1,6 +1,6 @@
 {
   "name": "super-sessionstorage",
-  "version": "2.1.0",
+  "version": "2.1.1",
   "description": "Implementation of improved window.sessionStorage for server, Type-Safe, and TTL cache system.",
   "main": "lib/index.js",
   "type": "module",

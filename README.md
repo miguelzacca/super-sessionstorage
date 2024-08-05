@@ -47,7 +47,7 @@ const storage = new SuperSessionStorage<CustomItemType>({ /* options */ })
 ```js
 import { SuperSessionStorage } from 'super-sessionstorage'
 
-export const storage = new SuperSessionStorage({ ttl: 3600 })
+export const storage = new SuperSessionStorage({ stdTTL: 3600 })
 ```
 
 #### setItem:
