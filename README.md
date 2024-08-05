@@ -2,7 +2,7 @@
 
 Implementation of `window.sessionStorage` for server.
 
-it works without the need for a window. Furthermore, super sessionstorage maintains the original types, avoiding the need to make conversions. (type-safe storage)
+it works without the need for a `window`. Furthermore, super sessionstorage maintains the original types, avoiding the need to make conversions. (`type-safe storage`)
 
 ## Install
 
