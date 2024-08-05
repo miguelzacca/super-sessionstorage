@@ -1,0 +1,43 @@
+{
+  "name": "super-sessionstorage",
+  "version": "1.0.0",
+  "description": "Implementation of window.sessionStorage for server.",
+  "main": "lib/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tsc"
+  },
+  "author": "Miguel Zacca",
+  "license": "MIT",
+  "keywords": [
+    "server",
+    "super",
+    "session",
+    "cache",
+    "inmemory",
+    "sessionstorage",
+    "session storage",
+    "super session storage",
+    "window",
+    "parse",
+    "parsed",
+    "backend",
+    "memory",
+    "storage"
+  ],
+  "devDependencies": {
+    "typescript": "^5.5.4"
+  },
+  "directories": {
+    "lib": "lib"
+  },
+  "types": "./lib/index.d.ts",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/miguelzacca/super-sessionstorage.git"
+  },
+  "bugs": {
+    "url": "https://github.com/miguelzacca/super-sessionstorage/issues"
+  },
+  "homepage": "https://github.com/miguelzacca/super-sessionstorage#readme"
+}
