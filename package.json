@@ -1,6 +1,6 @@
 {
   "name": "super-sessionstorage",
-  "version": "1.0.3",
+  "version": "1.1.0",
   "description": "Implementation of window.sessionStorage for server.",
   "main": "lib/index.js",
   "type": "module",
