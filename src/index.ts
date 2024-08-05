@@ -4,7 +4,7 @@ interface SuperSessionStorageProperties {
   key(index: number): any
   removeItem(key: string): void
   clear(): void
-  length(): number
+  get length(): number
 }
 
 class SuperSessionStorage implements SuperSessionStorageProperties {
@@ -30,7 +30,7 @@ class SuperSessionStorage implements SuperSessionStorageProperties {
     this.map.clear()
   }
 
-  length(): number {
+  get length(): number {
     return this.map.size
   }
 }
