@@ -1,12 +1,13 @@
 {
   "name": "super-sessionstorage",
-  "version": "1.1.0",
-  "description": "Implementation of window.sessionStorage for server.",
+  "version": "1.1.1",
+  "description": "Implementation of improved window.sessionStorage for server, Type-Safe, and TTL cache system.",
   "main": "lib/index.js",
   "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "tsc"
+    "build": "tsc",
+    "publish": "npm run build && npm publish"
   },
   "author": "Miguel Zacca",
   "license": "MIT",
@@ -24,7 +25,8 @@
     "parsed",
     "backend",
     "memory",
-    "storage"
+    "storage",
+    "ttl"
   ],
   "devDependencies": {
     "typescript": "^5.5.4"
