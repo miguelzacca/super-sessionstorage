@@ -32,6 +32,12 @@ npm install super-sessionstorage
 
 - `checkperiod` default is 60 (seconds)
 
+## Strict Type
+
+```js
+const storage = new SuperSessionStorage<CustomItemType>(/* options */)
+```
+
 ## Example
 
 #### config.js:
@@ -82,5 +88,6 @@ type Item = { id: number;  productName: string }
 
 const storage = new SuperSessionStorage<Item>()
 
-storage.setItem('example1', { id: '100', productName: 'test' }) // Error: Id should be number
+storage.setItem('example1', { id: '100', productName: 'test' })
+// Error: Id should be number
 ```
