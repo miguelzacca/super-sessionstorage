@@ -3,3 +3,7 @@ tsconfig*
 package-lock.json
 src/
 .git*
+test/
+.prettierrc
+.babelrc*
+

@@ -1,12 +1,17 @@
 {
   "name": "super-sessionstorage",
-  "version": "2.1.1",
+  "version": "2.1.2",
   "description": "Implementation of improved window.sessionStorage for server, Type-Safe, and TTL cache system.",
   "main": "lib/index.js",
   "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest",
     "build": "tsc"
+  },
+  "jest": {
+    "transform": {
+      "^.+\\.[t|j]sx?$": "babel-jest"
+    }
   },
   "author": "Miguel Zacca",
   "license": "MIT",
@@ -28,6 +33,12 @@
     "ttl"
   ],
   "devDependencies": {
+    "@babel/preset-env": "^7.25.3",
+    "@babel/preset-typescript": "^7.24.7",
+    "@jest/globals": "^29.7.0",
+    "@types/jest": "^29.5.12",
+    "babel-jest": "^29.7.0",
+    "ts-jest": "^29.2.4",
     "typescript": "^5.5.4"
   },
   "directories": {

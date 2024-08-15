@@ -25,7 +25,7 @@ export class SuperSessionStorage<T = any>
   private map: Map<string, MapEntry<T>>
 
   private stdTTL?: number
-  private cleanupInterval?: number
+  private cleanupInterval?: NodeJS.Timeout
 
   constructor(options?: SuperSessionStorageConstructor<T>) {
     if (options?.stdTTL) {
