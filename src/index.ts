@@ -90,7 +90,7 @@ export class SuperSessionStorage<T = any>
   private setItemDTO = (key: string, value: T, customTTL?: number) => {
     if (customTTL && !this.stdTTL) {
       throw new Error(
-        'ERROR: To use customTTL you need to activate the default stdTTL on the instance',
+        'To use customTTL you need to activate the default stdTTL on the instance',
       )
     }
   }
